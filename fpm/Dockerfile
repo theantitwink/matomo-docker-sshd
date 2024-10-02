@@ -76,9 +76,9 @@ RUN set -ex; \
 		$fetchDeps \
 	; \
 	\
-	git clone https://github.com/matomo-org/matomo.git /usr/src/matomo
+	git clone https://github.com/matomo-org/matomo.git /usr/src/matomo \
  	; \
-  	rm -rf /usr/src/matomo/.git /usr/src/matomo/.github
+  	rm -rf /usr/src/matomo/.git /usr/src/matomo/.github \
    	; \
 	rm -rf /var/lib/apt/lists/*
 
