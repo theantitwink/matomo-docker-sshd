@@ -54,7 +54,8 @@ if [ ! -e matomo.php ]; then
 		user="$uid"
 		group="$gid"
 	fi
-	tar cf - --one-file-system -C /usr/src/matomo . | tar xf -
+	# tar cf - --one-file-system -C /usr/src/matomo . | tar xf -
+ 	cp -r /usr/src/matomo .
 	chown -R "$user":"$group" .
 fi
 
