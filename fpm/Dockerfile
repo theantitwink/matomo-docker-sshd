@@ -14,6 +14,7 @@ RUN set -ex; \
 		libpng-dev \
 		libzip-dev \
 		procps \
+  		git \
 	; \
 	\
 	debMultiarch="$(dpkg-architecture --query DEB_BUILD_MULTIARCH)"; \
@@ -75,18 +76,10 @@ RUN set -ex; \
 		$fetchDeps \
 	; \
 	\
-	curl -fsSL -o matomo.tar.gz \
-		"https://builds.matomo.org/matomo-${MATOMO_VERSION}.tar.gz"; \
-	curl -fsSL -o matomo.tar.gz.asc \
-		"https://builds.matomo.org/matomo-${MATOMO_VERSION}.tar.gz.asc"; \
-	export GNUPGHOME="$(mktemp -d)"; \
-	gpg --batch --keyserver keyserver.ubuntu.com --recv-keys F529A27008477483777FC23D63BB30D0E5D2C749; \
-	gpg --batch --verify matomo.tar.gz.asc matomo.tar.gz; \
-	gpgconf --kill all; \
-	rm -rf "$GNUPGHOME" matomo.tar.gz.asc; \
-	tar -xzf matomo.tar.gz -C /usr/src/; \
-	rm matomo.tar.gz; \
-	apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false $fetchDeps; \
+	git clone https://github.com/matomo-org/matomo.git /usr/src/matomo
+ 	; \
+  	rm -rf /usr/src/matomo/.git /usr/src/matomo/.github
+   	; \
 	rm -rf /var/lib/apt/lists/*
 
 # Start and enable SSH
